@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, Button } from 'react-native';
 
-
-export default class Loading extends Component {
-    moveMainPage(){
-           alert("이동");
-    }
-    render(){
+export default function Loading ({navigation}){
          return (
            <View style={styles.container}>
              <View>
@@ -26,7 +21,7 @@ export default class Loading extends Component {
                  </View>
                  <View style={styles.eachBtn}>
                      <Button
-                       onPress={this.moveMainPage}
+                        onPress={() => navigation.navigate('CalenderPage')}
                        title="캘린더"
                        color="#C0C0C0"
                      />
@@ -40,7 +35,6 @@ export default class Loading extends Component {
              </View>
            </View>
          );
-     }
 }
 
 const styles = StyleSheet.create({
