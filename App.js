@@ -7,23 +7,29 @@
  */
 
 import React from 'react';
-import Loading from "./loading"
+import Loading from "./container/loading"
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native' ;
 import { createStackNavigator } from '@react-navigation/stack' ;
-import CalenderPageLode from './CalenderPage';
+import CalenderPageLode from './container/CalenderPage';
+import MemoPage from './container/MemoPage';
+import { Provider } from 'mobx-react';
+import stores from './store/index';
 
 const Stack = createStackNavigator();
 
 export default class App extends React.Component {
   render() {
   return(
-        <NavigationContainer>
-          <Stack.Navigator initialRouteName="Loading">
-            <Stack.Screen name="Loading" component={Loading} />
-            <Stack.Screen name="CalenderPage" component={CalenderPageLode} />
-          </Stack.Navigator>
-        </NavigationContainer>
+      <Provider {...stores}>
+            <NavigationContainer>
+              <Stack.Navigator initialRouteName="Loading">
+                <Stack.Screen name="Loading" component={Loading} />
+                <Stack.Screen name="CalenderPage" component={CalenderPageLode} />
+                <Stack.Screen name="MemoPage" component={MemoPage} />
+              </Stack.Navigator>
+            </NavigationContainer>
+      </Provider>
         );
   }
 }

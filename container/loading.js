@@ -6,7 +6,7 @@ export default function Loading ({navigation}){
            <View style={styles.container}>
              <View>
                  <Image style={styles.iconImg}
-                 source={require('./icon/iconM.png')}/>
+                 source={require('../icon/iconM.png')}/>
              </View>
              <View>
                  <Text style={styles.title}>글구멍</Text>
