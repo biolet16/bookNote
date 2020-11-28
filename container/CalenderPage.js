@@ -1,10 +1,9 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-import { StyleSheet, Text, View, Image, Button } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, TouchableOpacity } from 'react-native';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import {LocaleConfig} from 'react-native-calendars';
 import moment from 'moment';
-
 
 LocaleConfig.locales['fr'] = {
   monthNames: ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
@@ -15,8 +14,6 @@ LocaleConfig.locales['fr'] = {
 };
 LocaleConfig.defaultLocale = 'fr';
 
-@inject('bookNoteStore')
-@observer
 class CalenderPageLode extends React.Component {
   state = {
       selectedDate:null,
@@ -30,15 +27,15 @@ class CalenderPageLode extends React.Component {
 
   render(){
       const {selectedDate} = this.props.bookNoteStore;
+      console.log(selectedDate);
       return (
            <View style={styles.container}>
-              <View>
-                <Button
-//                    onPress={() => navigation.navigate('CalenderPage')}
-                   title="+"
-//                   color="#C0C0C0"
-                 />
-              </View>
+             <View>
+               <Text style={styles.titleTxt}>이달의 책</Text>
+               <TouchableOpacity activeOpacity={0.8}  style={styles.bookAddBtn} >
+                     <Text style={styles.addTxt}>+</Text>
+               </TouchableOpacity>
+             </View>
                <Calendar
                  onChange={(range) => console.log(range)}
                  onDayPress={(day) => this.selectDay(day)}
@@ -101,6 +98,23 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor:'#ffffff',
     },
+    bookAddBtn:{
+     backgroundColor:'#ffffff',
+     width:50,
+     marginLeft:17,
+     marginTop:3
+    },
+    addTxt:{
+     fontSize: 30,
+     color: '#E5E5E5'
+    },
+    titleTxt:{
+     fontWeight: "bold",
+     fontSize: 10,
+     marginLeft:15,
+     color: '#000000'
+    }
 })
 
-export default CalenderPageLode;
+//export default CalenderPageLode;
+export default (inject('bookNoteStore')(observer(CalenderPageLode)));
