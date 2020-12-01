@@ -15,6 +15,7 @@ export default function Loading ({navigation}){
              <View style={styles.btnContainer}>
                  <View style={styles.eachBtn}>
                      <Button
+                        onPress={() => navigation.navigate('LoginPage')}
                        title="로그인"
                        color="#C0C0C0"
                      />
