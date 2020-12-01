@@ -15,18 +15,19 @@ LocaleConfig.locales['fr'] = {
 LocaleConfig.defaultLocale = 'fr';
 
 class CalenderPageLode extends React.Component {
-  state = {
-      selectedDate:null,
-  };
 
+//선택한 날짜 및 스타일 설정 함수
   selectDay(day){
+    //저장할 날짜, 스타일 변수
     let dayData={[day.year + "-" + day.dateString.split('-')[1] + "-" + day.dateString.split('-')[2]]:{selected: true, marked: true, selectedColor: "rgb(76,174,249)"}};
+    //store 저장 함수 호출
     this.props.bookNoteStore.changeSelectDay(dayData);
+    //memo 페이지 오픈
     this.props.navigation.navigate('MemoPage');
   }
 
   render(){
-      const {selectedDate} = this.props.bookNoteStore;
+      const {selectedDate, id} = this.props.bookNoteStore;
       console.log(selectedDate);
       return (
            <View style={styles.container}>
@@ -116,5 +117,5 @@ const styles = StyleSheet.create({
     }
 })
 
-//export default CalenderPageLode;
+//*중요* container에 store 연결(없으면 연결 절대 안됨;;)
 export default (inject('bookNoteStore')(observer(CalenderPageLode)));
