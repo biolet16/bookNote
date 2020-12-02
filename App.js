@@ -22,6 +22,7 @@ const Stack = createStackNavigator();
 export default class App extends React.Component {
   render() {
   return(
+    //provider안에 있는 container들에 store 데이터 넘겨줌
       <Provider {...stores}>
             <NavigationContainer>
               <Stack.Navigator initialRouteName="Loading">
