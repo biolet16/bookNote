@@ -12,6 +12,7 @@
   "dependencies": {
     "@react-native-community/picker": "1.8.1",
     "@react-native-firebase/app": "10.1.0",
+    "@react-native-firebase/firestore": "10.1.0",
     "@react-navigation/native": "^5.0.5",
     "@react-navigation/stack": "5.12.8",
     "autobind-decorator": "2.4.0",

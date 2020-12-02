@@ -3,6 +3,7 @@ import { inject, observer } from 'mobx-react';
 import { StyleSheet, Text, View, Image, Button, TouchableOpacity } from 'react-native';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import {LocaleConfig} from 'react-native-calendars';
+
 import moment from 'moment';
 
 LocaleConfig.locales['fr'] = {
@@ -19,15 +20,37 @@ class CalenderPageLode extends React.Component {
       selectedDate:null,
   };
 
+  constructor(props) {
+      super(props);
+        this.props.bookNoteStore.getMonthBookList();
+    }
+
+
+
   selectDay(day){
     let dayData={[day.year + "-" + day.dateString.split('-')[1] + "-" + day.dateString.split('-')[2]]:{selected: true, marked: true, selectedColor: "rgb(76,174,249)"}};
     this.props.bookNoteStore.changeSelectDay(dayData);
     this.props.navigation.navigate('MemoPage');
   }
 
+    async getData() {
+      try {
+        const querySnapshot = await firebase.firestore()
+        .collection('bookNote')
+        .get() //error with this
+
+        console.log('Documents', querySnapshot.docs);
+
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
+
   render(){
-      const {selectedDate} = this.props.bookNoteStore;
-      console.log(selectedDate);
+      const {selectedDate, monthBookList} = this.props.bookNoteStore;
+
+       console.log('render',monthBookList);
       return (
            <View style={styles.container}>
              <View>
@@ -102,7 +125,8 @@ const styles = StyleSheet.create({
      backgroundColor:'#ffffff',
      width:50,
      marginLeft:17,
-     marginTop:3
+     marginTop:3,
+     marginBottom:60
     },
     addTxt:{
      fontSize: 30,
