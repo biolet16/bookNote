@@ -3,6 +3,7 @@ import { inject, observer } from 'mobx-react';
 import { StyleSheet, Text, View, Image, Button, TouchableOpacity } from 'react-native';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import {LocaleConfig} from 'react-native-calendars';
+
 import moment from 'moment';
 
 LocaleConfig.locales['fr'] = {
@@ -16,6 +17,11 @@ LocaleConfig.defaultLocale = 'fr';
 
 class CalenderPageLode extends React.Component {
 
+  constructor(props) {
+      super(props);
+        this.props.bookNoteStore.getMonthBookList();
+    }
+
 //선택한 날짜 및 스타일 설정 함수
   selectDay(day){
     //저장할 날짜, 스타일 변수
@@ -26,9 +32,24 @@ class CalenderPageLode extends React.Component {
     this.props.navigation.navigate('MemoPage');
   }
 
+    async getData() {
+      try {
+        const querySnapshot = await firebase.firestore()
+        .collection('bookNote')
+        .get() //error with this
+
+        console.log('Documents', querySnapshot.docs);
+
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
+
   render(){
-      const {selectedDate, id} = this.props.bookNoteStore;
-      console.log(selectedDate);
+      const {selectedDate, monthBookList} = this.props.bookNoteStore;
+
+       console.log('render',monthBookList);
       return (
            <View style={styles.container}>
              <View>
@@ -103,7 +124,8 @@ const styles = StyleSheet.create({
      backgroundColor:'#ffffff',
      width:50,
      marginLeft:17,
-     marginTop:3
+     marginTop:3,
+     marginBottom:60
     },
     addTxt:{
      fontSize: 30,
