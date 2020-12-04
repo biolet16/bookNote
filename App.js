@@ -14,6 +14,7 @@ import { createStackNavigator } from '@react-navigation/stack' ;
 import CalenderPageLode from './container/CalenderPage';
 import MemoPage from './container/MemoPage';
 import LoginPage from './container/LoginPage';
+import SignUpPage from './container/SignUpPage';
 import { Provider } from 'mobx-react';
 import stores from './store/index';
 
@@ -30,6 +31,7 @@ export default class App extends React.Component {
                 <Stack.Screen name="CalenderPage" component={CalenderPageLode} />
                 <Stack.Screen name="MemoPage" component={MemoPage} />
                 <Stack.Screen name="LoginPage" component={LoginPage} />
+                <Stack.Screen name="SignUpPage" component={SignUpPage} />
               </Stack.Navigator>
             </NavigationContainer>
       </Provider>
