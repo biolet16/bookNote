@@ -12,7 +12,7 @@ class LoginPage extends React.Component {
     state = { email: '', password: '', errorMessage: null };
     //로그인 메소드
     handleLogin = () => {
-        const { email, pasword } = this.state
+        const { email, password } = this.state
         firebase
           .auth()
           .signInWithEmailAndPassword(email, password)
