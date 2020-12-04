@@ -28,8 +28,8 @@ class CalenderPageLode extends React.Component {
 
   constructor(props) {
       super(props);
-        this.props.bookNoteStore.getMonthBookList();
-    }
+      this.props.bookNoteStore.getMonthBookList();
+  }
 
 //선택한 날짜 및 스타일 설정 함수
   selectDay(day){
@@ -41,35 +41,43 @@ class CalenderPageLode extends React.Component {
     this.props.navigation.navigate('MemoPage');
   }
 
-    async getData() {
-      try {
-        const querySnapshot = await firebase.firestore()
-        .collection('bookNote')
-        .get() //error with this
-
-        console.log('Documents', querySnapshot.docs);
-
-      } catch (e) {
-        console.log(e);
-      }
-    }
+  selectMonth(month){
+    console.log(month.month);
+    this.props.bookNoteStore.changeSelectMon(String(month.month));
+  }
 
 
   render(){
       const {selectedDate, monthBookList} = this.props.bookNoteStore;
-
-       console.log('render',monthBookList);
+      console.log('render',monthBookList);
       return (
            <View style={styles.container}>
              <View>
                <Text style={styles.titleTxt}>이달의 책</Text>
+               {
+                    monthBookList!==null &&
+                        monthBookList.map(data => {
+                            let color=data.BOOKCOLOR;
+                            return(
+                            <View key={data.NO+'Pview'}>
+                                <View key={data.NO+'view'} style={{width:10, backgroundColor: color}}/>
+                                <Text key={data.NO} style={styles.titleTxt}>{data.BOOKTITLE}</Text>
+                             </View>
+                            )
+                        })
+                    ||
+                    <></>
+               }
                <TouchableOpacity activeOpacity={0.8}  style={styles.bookAddBtn} >
                      <Text style={styles.addTxt}>+</Text>
                </TouchableOpacity>
              </View>
+             <View>
+             </View>
                <Calendar
                  onChange={(range) => console.log(range)}
                  onDayPress={(day) => this.selectDay(day)}
+                 onMonthChange={(month) => this.selectMonth(month)}
                  startDate={moment().format('YYYY-MM-DD')}
                  monthFormat={'MM월'}
                  markedDates={selectedDate}
