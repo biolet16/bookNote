@@ -1,4 +1,5 @@
 import React from 'react';
+import firebase from '@react-native-firebase/app';
 import { inject, observer } from 'mobx-react';
 import { StyleSheet, Text, View, Image, Button, TouchableOpacity } from 'react-native';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
@@ -16,6 +17,14 @@ LocaleConfig.locales['fr'] = {
 LocaleConfig.defaultLocale = 'fr';
 
 class CalenderPageLode extends React.Component {
+    //로그아웃
+    logOut(){
+        firebase
+            .auth()
+            .signOut()
+            .then(() => this.props.navigation.navigate('LoginPage'))
+            .catch(error => this.setState({ errorMessage: error.message }))
+    }
 
   constructor(props) {
       super(props);
@@ -108,6 +117,8 @@ class CalenderPageLode extends React.Component {
                    nonTouchableLastMonthDayTextStyle: {},
                  }}
                />
+               <Button  onPress={this.logOut}
+                    title="로그아웃"/>
            </View>
 
         );

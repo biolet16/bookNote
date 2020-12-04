@@ -1,8 +1,17 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, Button } from 'react-native';
+import firebase from '@react-native-firebase/app';
+import auth from '@react-native-firebase/auth';
 
-export default function Loading ({navigation}){
-         return (
+export default class Loading extends React.Component{
+    componentDidMount() {//로그인했는지 안했는지.
+        firebase.auth().onAuthStateChanged(user => {
+        console.log(user);
+        this.props.navigation.navigate(user ? 'CalenderPage' : 'LoginPage')
+        })
+    }
+    render(){
+       return (
            <View style={styles.container}>
              <View>
                  <Image style={styles.iconImg}
@@ -12,31 +21,14 @@ export default function Loading ({navigation}){
                  <Text style={styles.title}>글구멍</Text>
                  <Text style={styles.subTitle}>글을 이해하는 지혜</Text>
              </View>
-             <View style={styles.btnContainer}>
-                 <View style={styles.eachBtn}>
-                     <Button
-                        onPress={() => navigation.navigate('LoginPage')}
-                       title="로그인"
-                       color="#C0C0C0"
-                     />
-                 </View>
-                 <View style={styles.eachBtn}>
-                     <Button
-                        onPress={() => navigation.navigate('CalenderPage')}
-                       title="캘린더"
-                       color="#C0C0C0"
-                     />
-                 </View>
-                 <View style={styles.eachBtn}>
-                     <Button
-                       title="책검색"
-                       color="#C0C0C0"
-                     />
-                 </View>
-             </View>
            </View>
-         );
+       );
+    }
 }
+
+/*export default function Loading ({navigation}){
+
+}*/
 
 const styles = StyleSheet.create({
     container: {
