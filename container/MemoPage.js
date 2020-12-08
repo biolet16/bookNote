@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import { inject, observer } from 'mobx-react';
 import { StyleSheet, Text, View, Image, Button } from 'react-native';
-
-export default function MemoPage ({navigation}){
+class MemoPage extends Component {
+     render(){
+        const {selectBookData} = this.props.bookNoteStore;
+        console.log('MemoPage',selectBookData)
          return (
            <View style={styles.container}>
              <View>
@@ -9,6 +12,7 @@ export default function MemoPage ({navigation}){
              </View>
            </View>
          );
+     }
 }
 
 const styles = StyleSheet.create({
@@ -19,3 +23,5 @@ const styles = StyleSheet.create({
         backgroundColor:'#ffffff',
     },
 })
+
+export default (inject('bookNoteStore')(observer(MemoPage)));

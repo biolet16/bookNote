@@ -13,6 +13,8 @@ import { NavigationContainer } from '@react-navigation/native' ;
 import { createStackNavigator } from '@react-navigation/stack' ;
 import CalenderPageLode from './container/CalenderPage';
 import MemoPage from './container/MemoPage';
+import BookListPage from './container/BookListPage';
+import BookItem from './container/BookItem';
 import LoginPage from './container/LoginPage';
 import SignUpPage from './container/SignUpPage';
 import { Provider } from 'mobx-react';
@@ -29,6 +31,8 @@ export default class App extends React.Component {
               <Stack.Navigator initialRouteName="Loading">
                 <Stack.Screen name="Loading" component={Loading} />
                 <Stack.Screen name="CalenderPage" component={CalenderPageLode} />
+                <Stack.Screen name="BookListPage" component={BookListPage} />
+                <Stack.Screen name="BookItem" component={BookItem} />
                 <Stack.Screen name="MemoPage" component={MemoPage} />
                 <Stack.Screen name="LoginPage" component={LoginPage} />
                 <Stack.Screen name="SignUpPage" component={SignUpPage} />

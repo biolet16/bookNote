@@ -21,7 +21,6 @@ class BookNoteStore{
 
     @observable password = '';
 
-
     //건드리지마
     constructor() {
         // Just call it here
