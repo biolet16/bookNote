@@ -17,6 +17,10 @@ class BookNoteStore{
 
     @observable selectBookData={};
 
+    @observable email = '';
+
+    @observable password = '';
+
     //건드리지마
     constructor() {
         // Just call it here
@@ -37,6 +41,16 @@ class BookNoteStore{
     @action.bound
     changeSelectBook(book) {
         this.selectBookData=book;
+    }
+
+    @action.bound
+    changeEmail(email) {
+        this.email=email;
+    }
+
+    @action.bound
+    changePassword(pw) {
+        this.password=pw;
     }
 
     //firebase DB 데이터 가져오는 예시 함수(월간 책 리스트 가져오는 함수)

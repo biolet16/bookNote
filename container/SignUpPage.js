@@ -1,5 +1,6 @@
 import React from 'react';
 import firebase from '@react-native-firebase/app';
+import auth from '@react-native-firebase/auth';
 import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
 
 export default class SignUp extends React.Component{
@@ -8,7 +9,7 @@ export default class SignUp extends React.Component{
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.state.email, this.state.password)
-        .then(() => this.props.navigation.navigate('Main'))
+        .then(() => this.props.navigation.navigate('CalenderPage'))
         .catch(error => this.setState({ errorMessage: error.message }))
     }
     render() {
@@ -38,7 +39,7 @@ export default class SignUp extends React.Component{
         />
         <Button title="Sign Up" onPress={this.handleSignUp} />
         <Button
-          title="Already have an account? Login"
+          title="이미 아이디가 있나요? 로그인"
           onPress={() => this.props.navigation.navigate('LoginPage')}
         />
       </View>
