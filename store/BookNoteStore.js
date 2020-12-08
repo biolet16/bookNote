@@ -15,9 +15,12 @@ class BookNoteStore{
     //임시 아이디
     @observable userId = 'bora';
 
+    @observable selectBookData={};
+
     @observable email = '';
 
     @observable password = '';
+
 
     //건드리지마
     constructor() {
@@ -34,6 +37,11 @@ class BookNoteStore{
     changeSelectMon(monData) {
         this.currentMonth=monData;
         this.findMonBookList(monData,this.bookList);
+    }
+
+    @action.bound
+    changeSelectBook(book) {
+        this.selectBookData=book;
     }
 
     @action.bound
