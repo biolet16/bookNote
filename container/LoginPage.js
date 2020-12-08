@@ -2,34 +2,62 @@ import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import { StyleSheet, Text, TextInput, View, Image, Button } from 'react-native';
 import firebase from '@react-native-firebase/app';
+import auth from '@react-native-firebase/auth';
 import  {  GoogleSignin, GoogleSigninButton, statusCodes }  from '@react-native-community/google-signin';
 
-GoogleSignin.configure({
-  webClientId: '',
-});
-
 class LoginPage extends React.Component {
-    state = { email: '', password: '', errorMessage: null };
+    componentDidMount() {
+        GoogleSignin.configure({
+          webClientId: 'AIzaSyBqWERw_WhOkm3YWMSrFGLAHCBZKhqh9JE',
+          offlineAccess: true,
+          hostedDomain: '',
+          forceConsentPrompt: true,
+        });
+      }
+    state = {
+    email: '',
+    password: '',
+    errorMessage: null
+    };
+
     //로그인 메소드
     handleLogin = () => {
-        const { email, password } = this.state
+        const { email, password } = this.props.bookNoteStore;
         firebase
           .auth()
           .signInWithEmailAndPassword(email, password)
           .then(() => this.props.navigation.navigate('CalenderPage'))
-          .catch(error => this.setState({ errorMessage: error.message }))
+          .catch(error => this.setState({ errorMessage: error.message }));
     }
-    //google 로그인
-    async onGoogleButtonPress() {
-      // users ID token 가져오기
-      const { idToken } = await GoogleSignin.signIn();
-      // 토큰으로 로그인 자격증명생성
-      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-      // 인증 정보로 로그인
-      return auth().signInWithCredential(googleCredential);
+    //이메일 store에 세팅
+    setEmail(email){
+        this.props.bookNoteStore.changeEmail(email);
     }
+    //패스워드 store에 세팅
+    setPw(password){
+        this.props.bookNoteStore.changePassword(password);
+    }
+    //구글 로그인
+    _signIn = async () => {
+      try {
+        await GoogleSignin.hasPlayServices();
+        const userInfo = await GoogleSignin.signIn();
+        this.setState({ userInfo });
+      } catch (error) {
+        if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+          // user cancelled the login flow
+        } else if (error.code === statusCodes.IN_PROGRESS) {
+          // operation (e.g. sign in) is in progress already
+        } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+          // play services not available or outdated
+        } else {
+          // some other error happened
+        }
+      }
+    };
 
     render(){
+        const {email, password} = this.props.bookNoteStore;
         return (
            <View style={styles.container}>
                 <Text>Login</Text>
@@ -43,30 +71,31 @@ class LoginPage extends React.Component {
                       style={styles.textInput}
                       autoCapitalize="none"
                       placeholder="Email"
-                      onChangeText={email => this.setState({ email })}
-                      value={this.state.email}
+                      onChangeText={email => this.setEmail(email)}
+                      value={email}
                 />
                 <TextInput
                       secureTextEntry
                       style={styles.textInput}
                       autoCapitalize="none"
                       placeholder="Password"
-                      onChangeText={password => this.setState({ password })}
-                      value={this.state.password}
+                      onChangeText={password => this.setPw(password)}
+                      value={password}
                 />
                 <Button title="Login" onPress={this.handleLogin} />
-                 <Button
-                      title="구글로그인-아직안함"
-                      onPress={() => onGoogleButtonPress().then(() => console.log('Signed in with Google!'))}
-                  />
+
                  <Button
                     onPress={() => this.props.navigation.navigate('SignUpPage')}
                     title="회원가입"
                     color="#C0C0C0"
                  />
-                 <View>
-                     <Text>Login</Text>
-                 </View>
+
+                 <GoogleSigninButton
+                     style={{ width: 192, height: 48 }}
+                     size={GoogleSigninButton.Size.Wide}
+                     color={GoogleSigninButton.Color.Dark}
+                     onPress={this._signIn}
+                     disabled={this.state.isSigninInProgress} />
            </View>
         );
   }

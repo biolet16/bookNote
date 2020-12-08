@@ -15,6 +15,10 @@ class BookNoteStore{
     //임시 아이디
     @observable userId = 'bora';
 
+    @observable email = '';
+
+    @observable password = '';
+
     //건드리지마
     constructor() {
         // Just call it here
@@ -30,6 +34,16 @@ class BookNoteStore{
     changeSelectMon(monData) {
         this.currentMonth=monData;
         this.findMonBookList(monData,this.bookList);
+    }
+
+    @action.bound
+    changeEmail(email) {
+        this.email=email;
+    }
+
+    @action.bound
+    changePassword(pw) {
+        this.password=pw;
     }
 
     //firebase DB 데이터 가져오는 예시 함수(월간 책 리스트 가져오는 함수)

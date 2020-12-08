@@ -10,6 +10,7 @@ export default class Loading extends React.Component{
         this.props.navigation.navigate(user ? 'CalenderPage' : 'LoginPage')
         })
     }
+
     render(){
        return (
            <View style={styles.container}>
