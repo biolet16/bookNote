@@ -37,8 +37,8 @@ class CalenderPageLode extends React.Component {
     let dayData={[day.year + "-" + day.dateString.split('-')[1] + "-" + day.dateString.split('-')[2]]:{selected: true, marked: true, selectedColor: "rgb(76,174,249)"}};
     //store 저장 함수 호출
     this.props.bookNoteStore.changeSelectDay(dayData);
-    //memo 페이지 오픈
-    this.props.navigation.navigate('MemoPage');
+    //bookList 페이지 오픈
+    this.props.navigation.navigate('BookListPage');
   }
 
   selectMonth(month){
