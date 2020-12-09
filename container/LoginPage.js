@@ -8,21 +8,33 @@ import  {  GoogleSignin, GoogleSigninButton, statusCodes }  from '@react-native-
 class LoginPage extends React.Component {
     componentDidMount() {
         GoogleSignin.configure({
-          webClientId: 'AIzaSyBqWERw_WhOkm3YWMSrFGLAHCBZKhqh9JE',
+          webClientId: '447851910801-24h87q3fnf376a7dm2nqp2dkvbkgih7f.apps.googleusercontent.com',
           offlineAccess: true,
           hostedDomain: '',
           forceConsentPrompt: true,
         });
-      }
+    }
+
     state = {
-    email: '',
-    password: '',
-    errorMessage: null
+        email: '',
+        password: '',
+        errorMessage: null,
+        loggedIn: false
     };
+
+    //구글로그인
+    async onGoogleButtonPress() {
+      // Get the users ID token
+      const { idToken } = await GoogleSignin.signIn();
+      // Create a Google credential with the token
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      // Sign-in the user with the credential
+      return auth().signInWithCredential(googleCredential);
+    }
 
     //로그인 메소드
     handleLogin = () => {
-        const { email, password } = this.props.bookNoteStore;
+        const { email, password, loggedIn } = this.props.bookNoteStore;
         firebase
           .auth()
           .signInWithEmailAndPassword(email, password)
@@ -37,24 +49,10 @@ class LoginPage extends React.Component {
     setPw(password){
         this.props.bookNoteStore.changePassword(password);
     }
-    //구글 로그인
-    _signIn = async () => {
-      try {
-        await GoogleSignin.hasPlayServices();
-        const userInfo = await GoogleSignin.signIn();
-        this.setState({ userInfo });
-      } catch (error) {
-        if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-          // user cancelled the login flow
-        } else if (error.code === statusCodes.IN_PROGRESS) {
-          // operation (e.g. sign in) is in progress already
-        } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-          // play services not available or outdated
-        } else {
-          // some other error happened
-        }
-      }
-    };
+    //로그인 상태 store에 세팅
+    setLoggedIn(loggedIn){
+        this.props.bookNoteStore.changeLogged(loggedIn);
+    }
 
     render(){
         const {email, password} = this.props.bookNoteStore;
@@ -94,7 +92,7 @@ class LoginPage extends React.Component {
                      style={{ width: 192, height: 48 }}
                      size={GoogleSigninButton.Size.Wide}
                      color={GoogleSigninButton.Color.Dark}
-                     onPress={this._signIn}
+                     onPress={() => this.onGoogleButtonPress().then(() => this.props.navigation.navigate('CalenderPage'))}
                      disabled={this.state.isSigninInProgress} />
            </View>
         );
