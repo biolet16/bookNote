@@ -21,6 +21,9 @@ class BookNoteStore{
 
     @observable password = '';
 
+    //책 리스트
+    @observable memoList = [];
+
     //건드리지마
     constructor() {
         // Just call it here
@@ -72,6 +75,25 @@ class BookNoteStore{
 //            console.log(this.bookList);
           });
     }
+
+    //firebase DB memo 데이터 가져오기
+    async getDayMemoList(){
+        let list=[];
+        //collection(DB명),
+        await firestore()
+          .collection('memo')
+          .get()
+          .then(doc => {
+            //doc._docs:DB데이터리스트 data._data:DB데이터
+            doc._docs.map(data => {
+//             console.log(data._data);
+                list.push(data._data);
+            });
+            //store state 데이터 매핑
+            this.memoList=list;
+//            console.log(this.bookList);
+          });
+    }
     @action.bound
     findMonBookList(monData,bookList){
         let list=[];
@@ -85,6 +107,7 @@ class BookNoteStore{
         this.monthBookList=list;
         console.log('findMonBookList',this.monthBookList);
     }
+
 
     //선택 날짜 저장 함수(@action.bound 함수마다 무조건 붙이기)
     @action.bound

@@ -35,10 +35,19 @@ class BookListPage extends Component {
 
      render(){
          return (
-           <FlatList
-                data={this.state.data}
-                renderItem={this.renderItem.bind(this)}
-           />
+         <View style={styles.container}>
+            <Text style={styles.titleTxt}>최근 책</Text>
+            {
+                this.state.data!==undefined && this.state.data!==null && this.state.data.length!==0 &&
+                      <FlatList
+                            data={this.state.data}
+                            renderItem={this.renderItem.bind(this)}
+                       />
+                ||
+                <Text style={styles.noDataTxt}>등록된 책이 없습니다..</Text>
+            }
+
+         </View>
          );
       }
 }
@@ -64,7 +73,24 @@ const styles = StyleSheet.create({
     addTxt:{
        fontSize: 30,
        color: '#E5E5E5'
-      },
-})
+    },
+    noDataTxt:{
+        fontSize:20,
+        fontWeight:'bold',
+        color: '#BFBFBF',
+        marginTop:300,
+        marginLeft:100
+    },
+    titleTxt:{
+        fontSize:20,
+        fontWeight:'bold',
+        color: '#000000',
+        marginTop:20,
+        marginLeft:10
+    },
+    list:{
+        borderRadius: 5,
+    }
+});
 
 export default (inject('bookNoteStore')(observer(BookListPage)));
