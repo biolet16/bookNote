@@ -28,10 +28,10 @@ const styles = StyleSheet.create({
     bookItem: {
         flexDirection: 'row',
         backgroundColor:'#ffffff',
-        borderBottomColor:'#AAAAAA',
-        borderBottomWidth:2,
+        borderBottomColor:'#E9E8E8',
+        borderBottomWidth:1,
         padding:5,
-        height:175
+        height:150,
     },
     cover: {
         flex: 1,
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
        marginBottom:0,
     },
     addTxt:{
-       fontSize: 45,
+       fontSize: 40,
        color: '#E5E5E5'
     },
     bookAddBtn:{
@@ -70,6 +70,6 @@ const styles = StyleSheet.create({
         width:50,
         marginLeft:17,
     },
-})
+});
 
 export default (inject('bookNoteStore')(observer(BookItem)));

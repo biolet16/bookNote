@@ -53,24 +53,28 @@ class CalenderPageLode extends React.Component {
       return (
            <View style={styles.container}>
              <View>
-               <Text style={styles.titleTxt}>이달의 책</Text>
-               {
-                    monthBookList!==null &&
-                        monthBookList.map(data => {
-                            let color=data.BOOKCOLOR;
-                            return(
-                            <View key={data.NO+'Pview'}>
-                                <View key={data.NO+'view'} style={{width:10, backgroundColor: color}}/>
-                                <Text key={data.NO} style={styles.titleTxt}>{data.BOOKTITLE}</Text>
-                             </View>
-                            )
-                        })
-                    ||
-                    <></>
-               }
-               <TouchableOpacity activeOpacity={0.8}  style={styles.bookAddBtn} >
-                     <Text style={styles.addTxt}>+</Text>
-               </TouchableOpacity>
+                <View>
+                   <Text style={styles.titleTxt}>이달의 책</Text>
+                    {
+                           monthBookList!==null &&
+                               monthBookList.map(data => {
+                                   let color=data.BOOKCOLOR;
+                                   return(
+                                   <View key={data.NO+'Pview'}>
+                                       <View key={data.NO+'view'} style={{width:10, backgroundColor: color}}/>
+                                       <Text key={data.NO} style={styles.titleTxt}>{data.BOOKTITLE}</Text>
+                                    </View>
+                                   )
+                               })
+                           ||
+                           <></>
+                      }
+                </View>
+                <View>
+                      <TouchableOpacity activeOpacity={0.8}  style={styles.bookAddBtn} >
+                             <Text style={styles.addTxt}>+</Text>
+                       </TouchableOpacity>
+                </View>
              </View>
              <View>
              </View>
