@@ -9,7 +9,7 @@
 import React from 'react';
 import Loading from "./container/loading"
 import { StyleSheet, Text, View } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import { NavigationContainer } from '@react-navigation/native' ;
 import { createStackNavigator } from '@react-navigation/stack' ;
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -19,6 +19,7 @@ import BookListPage from './container/BookListPage';
 import BookItem from './container/BookItem';
 import LoginPage from './container/LoginPage';
 import SignUpPage from './container/SignUpPage';
+import BookSearch from './container/BookSearch';
 import { Provider } from 'mobx-react';
 import stores from './store/index';
 
@@ -54,6 +55,10 @@ function CalenderStack() {
           name="MemoPage"
           component={MemoPage}
           options={{ title: 'MemoPage' }} />
+        <Stack.Screen
+          name="BookSearch"
+          component={BookSearch}
+          options={{ title: 'BookSearch' }} />
       </Stack.Navigator>
   );
 }

@@ -46,6 +46,10 @@ class CalenderPageLode extends React.Component {
     this.props.bookNoteStore.changeSelectMon(String(month.month));
   }
 
+  monthBookAdd(){
+    this.props.navigation.navigate('BookSearch');
+  }
+
 
   render(){
       const {selectedDate, monthBookList} = this.props.bookNoteStore;
@@ -71,7 +75,7 @@ class CalenderPageLode extends React.Component {
                       }
                 </View>
                 <View>
-                      <TouchableOpacity activeOpacity={0.8}  style={styles.bookAddBtn} >
+                      <TouchableOpacity activeOpacity={0.8}  style={styles.bookAddBtn} onPress={() => this.monthBookAdd()}>
                              <Text style={styles.addTxt}>+</Text>
                        </TouchableOpacity>
                 </View>
