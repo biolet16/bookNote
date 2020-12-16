@@ -22,6 +22,7 @@ import SignUpPage from './container/SignUpPage';
 import BookSearch from './container/BookSearch';
 import { Provider } from 'mobx-react';
 import stores from './store/index';
+import SplashScreen from 'react-native-splash-screen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -86,6 +87,13 @@ function MemoStack() {
 
 
 export default class App extends React.Component {
+    //splash 화면 띄우기
+    componentDidMount(){
+        setTimeout(() => {
+            SplashScreen.hide();
+        }, 1000);
+    }
+
   render() {
   return(
     //provider안에 있는 container들에 store 데이터 넘겨줌
