@@ -1,9 +1,10 @@
 import React from 'react';
 import firebase from '@react-native-firebase/app';
 import { inject, observer } from 'mobx-react';
-import { StyleSheet, Text, View, Image, Button, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, TouchableOpacity, CommonActions } from 'react-native';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import {LocaleConfig} from 'react-native-calendars';
+import auth from '@react-native-firebase/auth';
 
 import moment from 'moment';
 
@@ -22,7 +23,9 @@ class CalenderPageLode extends React.Component {
         firebase
             .auth()
             .signOut()
-            .then(() => this.props.navigation.navigate('LoginPage'))
+            .then(() =>
+            //this.props.bookNoteStore.changeUserToken(null);
+            navigation.navigate('loginStack'))
             .catch(error => this.setState({ errorMessage: error.message }))
     }
 
@@ -133,8 +136,7 @@ class CalenderPageLode extends React.Component {
                    nonTouchableLastMonthDayTextStyle: {},
                  }}
                />
-               <Button  onPress={this.logOut}
-                    title="로그아웃"/>
+               <Button  onPress={this.logOut} title="로그아웃"/>
            </View>
 
         );
