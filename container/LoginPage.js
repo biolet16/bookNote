@@ -18,6 +18,7 @@ class LoginPage extends React.Component {
     state = {
         email: '',
         password: '',
+        token: null,
         errorMessage: null,
         loggedIn: false
     };
@@ -38,8 +39,14 @@ class LoginPage extends React.Component {
         firebase
           .auth()
           .signInWithEmailAndPassword(email, password)
-          .then(() => this.props.navigation.navigate('CalenderPage'))
+          .then(() => {
+            this.setUserToken();
+            this.props.navigation.navigate('HomeBottomTab');
+            })
           .catch(error => this.setState({ errorMessage: error.message }));
+    }
+    setUserToken(){
+        this.props.bookNoteStore.changeUserToken('success');
     }
     //이메일 store에 세팅
     setEmail(email){

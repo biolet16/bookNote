@@ -27,27 +27,44 @@ import SplashScreen from 'react-native-splash-screen';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
+function loginStack(){
+    return (
+         <Stack.Navigator
+                initialRouteName="LoginPage"
+                screenOptions={{
+                  headerStyle: { backgroundColor: '#000000' },
+                  headerTintColor: '#fff',
+                  headerTitleStyle: { fontWeight: 'bold' }
+                }}>
+             <Stack.Screen
+                  name="LoginPage"
+                  component={LoginPage}
+                  options={{ title: 'LoginPage' }} />
+                <Stack.Screen
+                  name="SignUpPage"
+                  component={SignUpPage}
+                  options={{ title: 'SignUpPage' }} />
+              <Stack.Screen
+                name="HomeBottomTab"
+                component={HomeBottomTab}
+               />
+        </Stack.Navigator>
+    );
+}
+
 function CalenderStack() {
   return (
       <Stack.Navigator
-        initialRouteName="Loading"
+        initialRouteName="CalenderPage"
         screenOptions={{
           headerStyle: { backgroundColor: '#000000' },
           headerTintColor: '#fff',
           headerTitleStyle: { fontWeight: 'bold' }
         }}>
-         <Stack.Screen
-          name="Loading"
-          component={Loading}
-          options={{ title: 'Loading' }}/>
         <Stack.Screen
           name="CalenderPage"
           component={CalenderPage}
           options={{ title: 'CalenderPage' }}/>
-        <Stack.Screen
-          name="LoginPage"
-          component={LoginPage}
-          options={{ title: 'LoginPage' }} />
         <Stack.Screen
             name="BookListPage"
             component={BookListPage}
@@ -85,6 +102,39 @@ function MemoStack() {
   );
 }
 
+function HomeBottomTab(){
+    return(
+       <Tab.Navigator
+          initialRouteName="calender"
+          screenOptions={({ route }) => ({
+                    tabBarIcon: ({ focused, color, size }) => {
+                      let iconName;
+//                                  if (route.name === 'calender') {
+//                                    iconName = 'calender-outline';
+//                                  } else if (route.name === 'memo'){
+//                                    iconName = 'document-text-outline';
+//                                  }
+                      // You can return any component that you like here!
+                      return <Icon name={iconName} size={size}  color={color}/>;
+                    },
+                  })}
+                  tabBarOptions={{
+                    activeTintColor: 'black',
+                    inactiveTintColor: 'gray',
+                  }}
+            >
+          <Tab.Screen
+            name="calender"
+            component={CalenderStack}/>
+          <Tab.Screen
+            name="memo"
+            component={MemoStack}/>
+        </Tab.Navigator>
+    );
+}
+
+
+
 
 export default class App extends React.Component {
     //splash 화면 띄우기
@@ -93,38 +143,18 @@ export default class App extends React.Component {
             SplashScreen.hide();
         }, 1000);
     }
-
   render() {
+  console.log('App',stores.bookNoteStore.userToken);
   return(
     //provider안에 있는 container들에 store 데이터 넘겨줌
      <Provider {...stores}>
             <NavigationContainer>
-               <Tab.Navigator
-                      initialRouteName="calender"
-                      screenOptions={({ route }) => ({
-                                tabBarIcon: ({ focused, color, size }) => {
-                                  let iconName;
-//                                  if (route.name === 'calender') {
-//                                    iconName = 'calender-outline';
-//                                  } else if (route.name === 'memo'){
-//                                    iconName = 'document-text-outline';
-//                                  }
-                                  // You can return any component that you like here!
-                                  return <Icon name={iconName} size={size}  color={color}/>;
-                                },
-                              })}
-                              tabBarOptions={{
-                                activeTintColor: 'black',
-                                inactiveTintColor: 'gray',
-                              }}
-                        >
-                      <Tab.Screen
-                        name="calender"
-                        component={CalenderStack}/>
-                      <Tab.Screen
-                        name="memo"
-                        component={MemoStack}/>
-                    </Tab.Navigator>
+                {stores.bookNoteStore.userToken == null ?(
+                   loginStack()
+                ):(
+                   HomeBottomTab()
+                )}
+
             </NavigationContainer>
       </Provider>
         );
@@ -136,4 +166,5 @@ const styles = StyleSheet.create({
             alignContent: "center"
         }
 });
+
 

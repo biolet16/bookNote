@@ -17,6 +17,8 @@ class BookNoteStore{
 
     @observable selectBookData={};
 
+    @observable userToken = null;
+
     @observable email = '';
 
     @observable password = '';
@@ -44,6 +46,11 @@ class BookNoteStore{
     @action.bound
     changeSelectBook(book) {
         this.selectBookData=book;
+    }
+
+    @action.bound
+    changeUserToken(token) {
+        this.userToken=token;
     }
 
     @action.bound
