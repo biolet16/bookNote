@@ -34,6 +34,7 @@ class BookListPage extends Component {
 
 
      render(){
+      console.log('BookListPage',this.props.bookNoteStore.selectedDay);
          return (
          <View style={styles.container}>
             <Text style={styles.titleTxt}>최근 책</Text>
