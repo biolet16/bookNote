@@ -32,9 +32,8 @@ function loginStack(){
          <Stack.Navigator
                 initialRouteName="LoginPage"
                 screenOptions={{
-                  headerStyle: { backgroundColor: '#000000' },
-                  headerTintColor: '#fff',
-                  headerTitleStyle: { fontWeight: 'bold' }
+                    headerStyle: { backgroundColor: '#000000' },
+                    headerShown: false
                 }}>
              <Stack.Screen
                   name="LoginPage"

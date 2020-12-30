@@ -1,7 +1,8 @@
 import React from 'react';
 import firebase from '@react-native-firebase/app';
 import { inject, observer } from 'mobx-react';
-import { StyleSheet, Text, View, Image, Button, TouchableOpacity, CommonActions } from 'react-native';
+import { CommonActions, } from '@react-navigation/native';
+import { StyleSheet, Text, View, Image, Button, TouchableOpacity } from 'react-native';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import {LocaleConfig} from 'react-native-calendars';
 import auth from '@react-native-firebase/auth';
@@ -19,13 +20,20 @@ LocaleConfig.defaultLocale = 'fr';
 
 class CalenderPageLode extends React.Component {
     //로그아웃
-    logOut(){
+    logOut = () => {
         firebase
             .auth()
             .signOut()
-            .then(() =>
-            //this.props.bookNoteStore.changeUserToken(null);
-            navigation.navigate('loginStack'))
+            .then(() =>{
+               console.log("로그아웃 성공");
+               this.props.bookNoteStore.changeUserToken(null);
+               this.props.navigation.dispatch(
+                   CommonActions.reset({
+                       index: 1,
+                       routes: [{name: 'LoginPage'},],
+                   }),
+               );
+            })
             .catch(error => this.setState({ errorMessage: error.message }))
     }
 
@@ -40,7 +48,6 @@ class CalenderPageLode extends React.Component {
     let dayData={[day.year + "-" + day.dateString.split('-')[1] + "-" + day.dateString.split('-')[2]]:{selected: true, marked: true, selectedColor: "rgb(76,174,249)"}};
     //store 저장 함수 호출
     this.props.bookNoteStore.changeSelectDay(dayData);
-    this.props.bookNoteStore.changeSelectDayData(day.dateString);
     //bookList 페이지 오픈
     this.props.navigation.navigate('BookListPage');
   }
@@ -51,7 +58,7 @@ class CalenderPageLode extends React.Component {
   }
 
   monthBookAdd(){
-    this.props.navigation.navigate('BookSearchPage');
+    this.props.navigation.navigate('BookSearch');
   }
 
 
