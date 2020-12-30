@@ -19,7 +19,7 @@ import BookListPage from './container/BookListPage';
 import BookItem from './container/BookItem';
 import LoginPage from './container/LoginPage';
 import SignUpPage from './container/SignUpPage';
-import BookSearch from './container/BookSearch';
+import BookSearchPage from './container/BookSearchPage';
 import { Provider } from 'mobx-react';
 import stores from './store/index';
 import SplashScreen from 'react-native-splash-screen';
@@ -57,9 +57,9 @@ function CalenderStack() {
           component={MemoPage}
           options={{ title: 'MemoPage' }} />
         <Stack.Screen
-          name="BookSearch"
-          component={BookSearch}
-          options={{ title: 'BookSearch' }} />
+          name="BookSearchPage"
+          component={BookSearchPage}
+          options={{ title: 'BookSearchPage' }} />
       </Stack.Navigator>
   );
 }

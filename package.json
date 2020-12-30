@@ -39,10 +39,12 @@
     "react-native-gesture-handler": "1.9.0",
     "react-native-google-books": "1.0.4",
     "react-native-i18n": "2.0.15",
+    "react-native-make": "1.0.1",
     "react-native-safe-area-context": "^3.1.7",
     "react-native-screens": "2.16.1",
     "react-native-splash-screen": "3.2.0",
-    "react-native-vector-icons": "7.1.0"
+    "react-native-vector-icons": "7.1.0",
+    "sharp": "0.23.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.0",

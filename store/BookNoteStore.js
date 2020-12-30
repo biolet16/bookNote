@@ -6,6 +6,8 @@ class BookNoteStore{
 
     //선택한 날짜 데이터 state 변수-변수앞에 무조건 @observable 붙여야됨(안붙이면 연결 안됨)
     @observable selectedDate = null;
+
+    @observable selectedDay = null;
     //책 리스트
     @observable bookList = [];
     //이 달의 책 리스트
@@ -24,6 +26,10 @@ class BookNoteStore{
     //책 리스트
     @observable memoList = [];
 
+    @observable searchBookTxt = '';
+
+    @observable searchBookList = [];
+
     //건드리지마
     constructor() {
         // Just call it here
@@ -31,8 +37,9 @@ class BookNoteStore{
     }
 
     @action.bound
-    changeSelectDay(dayData) {
-        this.selectedDate=dayData;
+    changeSelectDayData(dayData) {
+    console.log('dayData',dayData);
+        this.selectedDay=dayData;
     }
 
     @action.bound
@@ -54,6 +61,12 @@ class BookNoteStore{
     @action.bound
     changePassword(pw) {
         this.password=pw;
+    }
+
+
+    @action.bound
+    changeSearchBookList(books) {
+        this.searchBookList=books;
     }
 
     //firebase DB 데이터 가져오는 예시 함수(월간 책 리스트 가져오는 함수)
@@ -78,10 +91,12 @@ class BookNoteStore{
 
     //firebase DB memo 데이터 가져오기
     async getDayMemoList(){
+        console.log('getDayMemoList',moment(this.selectedDay));
         let list=[];
         //collection(DB명),
         await firestore()
-          .collection('memo')
+          .collection('memo').where("BOOKTITLE", '==', this.selectBookData.BOOKTITLE)
+//          .where("DATE", '==', moment(this.selectedDay))
           .get()
           .then(doc => {
             //doc._docs:DB데이터리스트 data._data:DB데이터
