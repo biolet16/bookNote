@@ -20,7 +20,6 @@ class LoginPage extends React.Component {
         password: '',
         token: null,
         errorMessage: null,
-        loggedIn: false
     };
 
     //구글로그인
@@ -35,7 +34,16 @@ class LoginPage extends React.Component {
 
     //로그인 메소드
     handleLogin = () => {
-        const { email, password, loggedIn } = this.props.bookNoteStore;
+        const { email, password } = this.props.bookNoteStore;
+        //이메일 비번 체크
+        if(email == null || email == ''){
+            this.setState({ errorMessage: '이메일을 입력해주세요' })
+            return false;
+        }
+        if(password == null || password == ''){
+            this.setState({ errorMessage: '비밀번호를 입력해주세요' })
+            return false;
+        }
         firebase
           .auth()
           .signInWithEmailAndPassword(email, password)
@@ -56,28 +64,24 @@ class LoginPage extends React.Component {
     setPw(password){
         this.props.bookNoteStore.changePassword(password);
     }
-    //로그인 상태 store에 세팅
-    setLoggedIn(loggedIn){
-        this.props.bookNoteStore.changeLogged(loggedIn);
-    }
 
     render(){
         const {email, password} = this.props.bookNoteStore;
         return (
            <View style={styles.container}>
-                <Text>Login</Text>
-                    {this.state.errorMessage &&
-                      <Text style={
-                        { color: 'red' }
-                        }>
-                        {this.state.errorMessage}
-                      </Text>}
-                    <TextInput
-                      style={styles.textInput}
-                      autoCapitalize="none"
-                      placeholder="Email"
-                      onChangeText={email => this.setEmail(email)}
-                      value={email}
+
+                {this.state.errorMessage &&
+                  <Text style={
+                    { color: 'red' }
+                    }>
+                    {this.state.errorMessage}
+                  </Text>}
+                <TextInput
+                  style={styles.textInput}
+                  autoCapitalize="none"
+                  placeholder="Email"
+                  onChangeText={email => this.setEmail(email)}
+                  value={email}
                 />
                 <TextInput
                       secureTextEntry
@@ -87,13 +91,19 @@ class LoginPage extends React.Component {
                       onChangeText={password => this.setPw(password)}
                       value={password}
                 />
-                <Button title="Login" onPress={this.handleLogin} />
-
-                 <Button
-                    onPress={() => this.props.navigation.navigate('SignUpPage')}
-                    title="회원가입"
-                    color="#C0C0C0"
-                 />
+                <View style={styles.button}>
+                    <Button title="Login"
+                        color="#000000"
+                        width="80%"
+                        onPress={this.handleLogin} />
+                </View>
+                <View style={styles.button}>
+                    <Button
+                        onPress={() => this.props.navigation.navigate('SignUpPage')}
+                        title="회원가입"
+                        color="#C0C0C0"
+                     />
+                </View>
 
                  <GoogleSigninButton
                      style={{ width: 192, height: 48 }}
@@ -113,6 +123,26 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
+    button: {
+        width: '80%',
+        margin : 5,
+    },
+    textInput: {
+        width: '80%',
+        height: 50,
+        margin : 5,
+        paddingTop: 5,
+        paddingBottom: 5,
+        backgroundColor: "#ffffff",
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+    }
 })
 
 export default (inject('bookNoteStore')(observer(LoginPage)));
